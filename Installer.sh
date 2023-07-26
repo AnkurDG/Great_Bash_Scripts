@@ -2,85 +2,88 @@
 
 echo "Welcome to The_Installer"
 sleep 1
-echo "You can download any application on your linux distro"
+echo "You can download any application on your Linux distro"
 sleep 1
 
-echo -n "Select an option which u want to install"
-sleep 2
-
-echo ""
-echo " 1)Visual Studio Code
-      2)Brave Browser
-      3)Chrome 
-      4)zsh
-      5)Build-Essential
-      6)VLC meadia Player
-      7)"
-read OPTION
-
-# echo -n "The official language of $COUNTRY is "
-
+echo -e "Select an option to install: \n1) Visual Studio Code\n2) Brave Browser\n3) Chrome\n4) Zsh Shell\n5) Build-Essential\n6) VLC Media Player"
+read -p "Enter your choice: " OPTION
 
 case $OPTION in
-
-  1)echo -n "Installing Visual Studio Code"
-   sudo snap install --classic code 2> file.txt
-   echo ""
-   echo "Version:" 
-   code --version
-   echo " Vs Code Installed successfully"
-   
+  1)
+    echo "Installing Visual Studio Code..."
+    sudo snap install --classic code > file.txt 2>&1
+    if [ $? -eq 0 ]; then
+        echo "Visual Studio Code Installed Successfully"
+        code --version
+    else
+        echo "Failed to install Visual Studio Code. Check file.txt for error logs."
+    fi
     ;;
 
   2)
-    echo -n "Installing Brave-Browser"
+    echo "Installing Brave Browser..."
     sudo apt install apt-transport-https curl > file.txt 2>&1
-    curl -s https://brave-browser-apt-release.s3.brave.com/brave-core.asc | sudo apt-key --      keyring /etc/apt/trusted.gpg.d/brave-browser-release.gpg add - > file.txt 2>&1
-   echo "deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+    curl -s https://brave-browser-apt-release.s3.brave.com/brave-core.asc | sudo apt-key --keyring /etc/apt/trusted.gpg.d/brave-browser-release.gpg add - > file.txt 2>&1
+    echo "deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
     sudo apt update > file.txt 2>&1
-    sudo apt install brave-browser 2> file.txt 
-    sleep 1
+    sudo apt install brave-browser > file.txt 2>&1
+    if [ $? -eq 0 ]; then
+        echo "Brave Browser Installed Successfully"
+    else
+        echo "Failed to install Brave Browser. Check file.txt for error logs."
+    fi
     rm file.txt
-    echo -n "Brave Installed  successfully"
     ;;
 
   3)
-    echo -n "Installing Chrome"
-    echo ""
+    echo "Installing Chrome..."
     wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb > file.txt 2>&1
     sudo dpkg -i google-chrome-stable_current_amd64.deb > file.txt 2>&1
-    echo -n "Chrome Installed  successfully"
-    sleep 1
-    clear
+    if [ $? -eq 0 ]; then
+        echo "Chrome Installed Successfully"
+    else
+        echo "Failed to install Chrome. Check file.txt for error logs."
+    fi
+    rm file.txt
     ;;
+
   4)
-  echo -n "Installing Zsh Shell"
-   sudo apt-get update > file.txt 2>&1
-   sudo apt-get install zsh > file.txt 2>&1
-   echo -n "zsh Shell Installed successfully"
-   sleep 1
-   clear
-  ;;
+    echo "Installing Zsh Shell..."
+    sudo apt-get update > file.txt 2>&1
+    sudo apt-get install zsh > file.txt 2>&1
+    if [ $? -eq 0 ]; then
+        echo "Zsh Shell Installed Successfully"
+    else
+        echo "Failed to install Zsh Shell. Check file.txt for error logs."
+    fi
+    rm file.txt
+    ;;
 
   5)
-  echo -n "Installing Build-Essential"
-   sudo apt update && sudo apt install build-essential
-   echo -n "Build-Essential Installed successfully"
-   sleep 1
-   clear
-  ;;
+    echo "Installing Build-Essential..."
+    sudo apt update > file.txt 2>&1
+    sudo apt install build-essential > file.txt 2>&1
+    if [ $? -eq 0 ]; then
+        echo "Build-Essential Installed Successfully"
+    else
+        echo "Failed to install Build-Essential. Check file.txt for error logs."
+    fi
+    rm file.txt
+    ;;
+
   6)
-  echo -n "Installing VLC"
-   sudo apt install snapd
-   sudo snap install vlc 
-   echo -n "VLC Installed successfully"
-   sleep 1
-   clear
-  ;;
-    
-    
+    echo "Installing VLC..."
+    sudo apt install snapd > file.txt 2>&1
+    sudo snap install vlc > file.txt 2>&1
+    if [ $? -eq 0 ]; then
+        echo "VLC Installed Successfully"
+    else
+        echo "Failed to install VLC. Check file.txt for error logs."
+    fi
+    rm file.txt
+    ;;
 
   *)
-    echo -n "Exiting"
+    echo "Exiting..."
     ;;
 esac
